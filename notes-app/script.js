@@ -1,8 +1,9 @@
 const noteInput = document.getElementById("noteInput");
-const addBtn = document.getElementById("addBtn");
-const notesContainer = document.getElementById("notesContainer");
-const searchInput = document.getElementById("searchInput");
 const categoryInput = document.getElementById("categoryInput");
+const addBtn = document.getElementById("addBtn");
+const searchInput = document.getElementById("searchInput");
+const notesContainer = document.getElementById("notesContainer");
+const noteCount = document.getElementById("noteCount");
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
@@ -13,18 +14,24 @@ function saveNotes() {
 function showNotes(filteredNotes = notes) {
   notesContainer.innerHTML = "";
 
+  noteCount.innerText = `Total Notes: ${filteredNotes.length}`;
+
+  if (filteredNotes.length === 0) {
+    notesContainer.innerHTML = "<p>No notes found</p>";
+    return;
+  }
+
   filteredNotes.forEach((note) => {
     const div = document.createElement("div");
 
     div.classList.add("note");
 
     div.innerHTML = `
-      <p><strong>Note:</strong>${note.text}</p>
-      <p><strong>Category:</strong>${note.category}</p>
-      <p><strong>Date:</strong>${note.date}</p>
+      <p><strong>Note:</strong> ${note.text}</p>
+      <p><strong>Category:</strong> ${note.category}</p>
+      <p><strong>Date:</strong> ${note.date}</p>
 
       <button class="editBtn">Edit</button>
-
       <button class="deleteBtn">Delete</button>
     `;
 
@@ -44,7 +51,7 @@ function showNotes(filteredNotes = notes) {
     });
 
     deleteBtn.addEventListener("click", () => {
-      notes = notes.filter(n => n.text !== note.text);
+      notes = notes.filter(n => n.date !== note.date);
 
       saveNotes();
 
@@ -54,14 +61,16 @@ function showNotes(filteredNotes = notes) {
     notesContainer.appendChild(div);
   });
 }
+
 addBtn.addEventListener("click", () => {
   const text = noteInput.value.trim();
+  const category = categoryInput.value.trim();
 
-  if (text === "") return;
+  if (text === "" || category === "") return;
 
   notes.push({
     text: text,
-    category: categoryInput.value.trim(),
+    category: category,
     date: new Date().toLocaleString()
   });
 
@@ -70,6 +79,7 @@ addBtn.addEventListener("click", () => {
   showNotes();
 
   noteInput.value = "";
+  categoryInput.value = "";
 });
 
 searchInput.addEventListener("input", () => {
@@ -80,6 +90,12 @@ searchInput.addEventListener("input", () => {
   );
 
   showNotes(filteredNotes);
+});
+
+noteInput.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    addBtn.click();
+  }
 });
 
 showNotes();

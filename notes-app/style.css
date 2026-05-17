@@ -13,38 +13,60 @@ body {
 }
 
 .container {
-  width: 400px;
+  width: 450px;
   background: white;
   padding: 20px;
   border-radius: 10px;
 }
 
 h1 {
-  margin-bottom: 20px;
   text-align: center;
+  margin-bottom: 20px;
 }
 
 input {
   width: 100%;
   padding: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
 button {
   width: 100%;
   padding: 10px;
   margin-bottom: 15px;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .note {
-  background: #ddd;
-  padding: 10px;
-  margin-bottom: 10px;
+  background: white;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.note p {
+  margin-bottom: 8px;
+}
+
+.editBtn,
+.deleteBtn {
+  width: auto;
+  padding: 8px 12px;
+  margin-right: 10px;
   border-radius: 5px;
 }
 
-.deleteBtn {
-  margin-top: 10px;
-  padding: 5px 10px;
+.editBtn:hover,
+.deleteBtn:hover {
+  opacity: 0.8;
+}
+
+#noteCount {
+  margin-bottom: 15px;
+  font-weight: bold;
 }
