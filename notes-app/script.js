@@ -2,6 +2,7 @@ const noteInput = document.getElementById("noteInput");
 const addBtn = document.getElementById("addBtn");
 const notesContainer = document.getElementById("notesContainer");
 const searchInput = document.getElementById("searchInput");
+const categoryInput = document.getElementById("categoryInput");
 
 let notes = JSON.parse(localStorage.getItem("notes")) || [];
 
@@ -18,7 +19,9 @@ function showNotes(filteredNotes = notes) {
     div.classList.add("note");
 
     div.innerHTML = `
-      <p>${note.text}</p>
+      <p><strong>Note:</strong>${note.text}</p>
+      <p><strong>Category:</strong>${note.category}</p>
+      <p><strong>Date:</strong>${note.date}</p>
 
       <button class="editBtn">Edit</button>
 
@@ -57,7 +60,9 @@ addBtn.addEventListener("click", () => {
   if (text === "") return;
 
   notes.push({
-    text: text
+    text: text,
+    category: categoryInput.value.trim(),
+    date: new Date().toLocaleString()
   });
 
   saveNotes();
