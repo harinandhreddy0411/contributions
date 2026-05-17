@@ -19,10 +19,26 @@ function showNotes(filteredNotes = notes) {
 
     div.innerHTML = `
       <p>${note.text}</p>
+
+      <button class="editBtn">Edit</button>
+
       <button class="deleteBtn">Delete</button>
     `;
 
+    const editBtn = div.querySelector(".editBtn");
     const deleteBtn = div.querySelector(".deleteBtn");
+
+    editBtn.addEventListener("click", () => {
+      const updatedText = prompt("Edit your note:", note.text);
+
+      if (updatedText !== null && updatedText.trim() !== "") {
+        note.text = updatedText.trim();
+
+        saveNotes();
+
+        showNotes();
+      }
+    });
 
     deleteBtn.addEventListener("click", () => {
       notes = notes.filter(n => n.text !== note.text);
